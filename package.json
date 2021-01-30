@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/luizhsou1/ecommerce-kafka#readme",
   "dependencies": {
+    "ip": "^1.1.5",
     "kafkajs": "^1.15.0"
   }
 }
