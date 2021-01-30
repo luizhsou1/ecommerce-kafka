@@ -1,0 +1,23 @@
+{
+  "name": "ecommerce-kafka",
+  "version": "1.0.0",
+  "description": "Projeto com intuito de aprender sobre kafka, integrando com Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizhsou1/ecommerce-kafka.git"
+  },
+  "keywords": [],
+  "author": "Luiz Henrique",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luizhsou1/ecommerce-kafka/issues"
+  },
+  "homepage": "https://github.com/luizhsou1/ecommerce-kafka#readme",
+  "dependencies": {
+    "kafkajs": "^1.15.0"
+  }
+}
