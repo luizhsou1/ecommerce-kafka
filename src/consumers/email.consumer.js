@@ -3,7 +3,7 @@
 const path = require('path')
 const { Kafka, logLevel } = require('kafkajs')
 const kafkaConfig = require('../configs/kafka.config')
-const { ECOMMERCE_NEW_ORDER } = require('../shared/topics.constant')
+const { ECOMMERCE_SEND_EMAIL } = require('../shared/topics.constant')
 
 const kafka = new Kafka({
   logLevel: logLevel.INFO,
@@ -15,7 +15,7 @@ const consumer = kafka.consumer({ groupId: scriptName })
 
 const run = async () => {
   await consumer.connect()
-  await consumer.subscribe({ topic: ECOMMERCE_NEW_ORDER, fromBeginning: true })
+  await consumer.subscribe({ topic: ECOMMERCE_SEND_EMAIL, fromBeginning: true })
   await consumer.run({
     // eachBatch: async ({ batch }) => {
     //   console.log(batch)

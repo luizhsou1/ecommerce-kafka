@@ -2,24 +2,34 @@
 
 const { Kafka, CompressionTypes, logLevel } = require('kafkajs')
 const CurrencyUtil = require('../shared/currency.util')
+const { ECOMMERCE_NEW_ORDER, ECOMMERCE_SEND_EMAIL } = require('../shared/topics.constant')
 const kafkaConfig = require('../configs/kafka.config')
 
 const kafka = new Kafka({
   logLevel: logLevel.DEBUG,
   ...kafkaConfig,
 })
-
-const topic = 'ECOMMERCE_NEW_ORDER'
 const producer = kafka.producer()
 
 const getRandomNumber = () => Math.round(Math.random(10) * 1000)
 
-const sendMessage = (numOrder) => {
+const sendNewOrder = (numOrder) => {
   return producer
     .send({
-      topic,
+      topic: ECOMMERCE_NEW_ORDER,
       compression: CompressionTypes.GZIP,
       messages: [{ /* key: numOrder, */ value: `Pedido ${numOrder} no valor de ${CurrencyUtil.format(getRandomNumber())}` }]
+    })
+    .then(console.log)
+    .catch(e => console.error(`[example/producer] ${e.message}`, e))
+}
+
+const sendEmail = () => {
+  return producer
+    .send({
+      topic: ECOMMERCE_SEND_EMAIL,
+      compression: CompressionTypes.GZIP,
+      messages: [{ /* key: numOrder, */ value: 'Thank you for your order! We are processing your order!' }]
     })
     .then(console.log)
     .catch(e => console.error(`[example/producer] ${e.message}`, e))
@@ -29,7 +39,8 @@ const run = async () => {
   await producer.connect()
   let numOrder = 1;
   setInterval(() => {
-    sendMessage(numOrder)
+    sendNewOrder(numOrder)
+    sendEmail()
     numOrder++;
   }, 2000)
 }
